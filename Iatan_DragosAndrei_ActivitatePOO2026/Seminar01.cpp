@@ -3,11 +3,12 @@
 using namespace std;
 
 class Cofetarie {
+
 public:
 	Cofetarie() :id(++nrCofetarii) {
 		this->id = 0;
 		this->denumire = "Cofetarie Generala";
-		this->nrProduse;
+		this->nrProduse = 0;
 		this->preturi = nullptr;
 	}
 
@@ -17,7 +18,7 @@ public:
 		this->denumire = denumire;
 		this->nrProduse = nrProduse;
 		this->preturi = new float[nrProduse];
-		for (i = 0;i < this->nrProduse;i++) {
+		for (int i = 0;i < this->nrProduse;i++) {
 			this->preturi[i] = preturi[i];
 		}
 		delete[] preturi;
@@ -31,7 +32,7 @@ public:
 			for (int i = 0;i < this->nrProduse - 1;i++) {
 				cout << this->preturi[i] << " lei, ";
 			}
-			cout << this->preturi[nrProduse] << " lei.";
+			cout << this->preturi[nrProduse - 1] << " lei.";
 		}
 		else {
 			cout << ", nu sunt produse!";
@@ -39,8 +40,19 @@ public:
 
 		cout << endl << "Denumire: " << this->denumire;
 	}
+
+	static int getNrCofetarii() {
+		return nrCofetarii;
+	}
+
+	~Cofetarie() {
+		if (this->preturi != nullptr) {
+			delete[] this->preturi;
+		}
+	}
+
 private:
-	const int id;
+	int id;
 	string denumire;
 	int nrProduse;
 	float* preturi;
@@ -49,7 +61,7 @@ private:
 
 int Cofetarie::nrCofetarii = 0;
 
-void main() {
+int main() {
 	Cofetarie cofetarieGenerala;
 
 	cofetarieGenerala.afisare();
@@ -60,5 +72,7 @@ void main() {
 
 	delete cofetarieRomana;
 
-	cout << endl << "Numar Cofetarii: " << Cofetarie::nrCofetarii;
+	cout << endl << "Numar Cofetarii: " << Cofetarie::getNrCofetarii();
+
+	return 0;
 }
