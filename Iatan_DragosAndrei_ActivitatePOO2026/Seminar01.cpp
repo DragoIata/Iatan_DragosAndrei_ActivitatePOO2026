@@ -47,15 +47,18 @@ private:
 	static int nrCofetarii;
 };
 
-int main() {
-	cout << "Bună Dimineața soare!" << endl;
-	int a, b, c;
-	cout << "a: ";
-	cin << a;
-	cout << "/n b: ";
-	cin << b;
-	c = a + b;
-	cout << "/n c=" << c;
-	return 0;
-	
+int Cofetarie::nrCofetarii = 0;
+
+void main() {
+	Cofetarie cofetarieGenerala;
+
+	cofetarieGenerala.afisare();
+
+	float* preturi = new float[] {18.5, 24, 15.5};
+	Cofetarie* cofetarieRomana = new Cofetarie(2, "Cofetarie Romana", 3, preturi);
+	cofetarieRomana->afisare();
+
+	delete cofetarieRomana;
+
+	cout << endl << "Numar Cofetarii: " << Cofetarie::nrCofetarii;
 }
