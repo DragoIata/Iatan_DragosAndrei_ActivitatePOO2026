@@ -45,9 +45,37 @@ public:
 			this->preturi = nullptr;
 		}
 	}
+	
+	void operator=(const Cofetarie& copie) {
+		this->denumire = copie.denumire;
+		this->nrProduse = copie.nrProduse;
+		this->zona = copie.zona;
+
+		if (this->preturi != nullptr) {
+			delete[] this->preturi;
+			this->preturi = nullptr;
+		}
+		if (copie.preturi != nullptr) {
+			this->preturi = new float[this->nrProduse];
+			for (int i = 0;i < this->nrProduse;i++) {
+				this->preturi[i] = copie.preturi[i];
+			}
+		}
+		else {
+			this->preturi = nullptr;
+		}
+	}
+
 	void afisare() {
 		cout << endl << "Id: " << this->id;
 		cout << endl << "Denumire: " << this->denumire;
+		cout << endl << "Zona: ";
+		if (this->zona == 1) {
+			cout << "Centrala";
+		}
+		else {
+			cout << "Periferica";
+		}
 		cout << endl << "Numar produse: " << this->nrProduse;
 		if (this->nrProduse > 0) {
 			cout << ", cu urmatoarele preturi: ";
@@ -59,8 +87,11 @@ public:
 		else {
 			cout << ", nu sunt produse!";
 		}
-
 		cout << endl << "Denumire: " << this->denumire;
+	}
+
+	bool operator<(const Cofetarie& c) {
+		return this->nrProduse < c.nrProduse;
 	}
 
 	static int getNrCofetarii() {
@@ -68,6 +99,7 @@ public:
 	}
 
 	~Cofetarie() {
+		cout << "S-a apelat destructorul pentru cofetaria cu id: " << this->id << endl;
 		if (this->preturi != nullptr) {
 			delete[] this->preturi;
 		}
