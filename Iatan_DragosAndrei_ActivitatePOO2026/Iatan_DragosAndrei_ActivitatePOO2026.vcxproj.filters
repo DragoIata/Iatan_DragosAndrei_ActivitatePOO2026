@@ -18,5 +18,8 @@
     <ClCompile Include="ProiectCofetarieSeminar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ProiectCartezianActivitate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
