@@ -7,15 +7,18 @@ enum Zona { Centrala = 1, Periferica = 2 };
 class Cofetarie {
 
 public:
+	static int nrCofetarii;
+
 	Cofetarie() :id(++nrCofetarii) {
-		this->id = 0;
+		//this->id = 0;
 		this->denumire = "Cofetarie Generala";
 		this->nrProduse = 0;
 		this->preturi = nullptr;
+		this->zona = Periferica;
 	}
 
-	Cofetarie(int id, string denumire, int nrProduse, float* preturi) :id(id), denumire(denumire) {
-		this->id = 0;
+	Cofetarie(int id, string denumire, int nrProduse, float* preturi, Zona zona) :id(id){
+		//this->id = 0;
 		nrCofetarii++;
 		this->denumire = denumire;
 		this->nrProduse = nrProduse;
@@ -23,7 +26,24 @@ public:
 		for (int i = 0;i < this->nrProduse;i++) {
 			this->preturi[i] = preturi[i];
 		}
+		this->zona = zona;
 		delete[] preturi;
+	}
+
+	Cofetarie(const Cofetarie& copie) :id(++nrCofetarii) {
+		this->denumire = copie.denumire;
+		this->nrProduse = copie.nrProduse;
+		this->zona = copie.zona;
+
+		if (copie.preturi != nullptr) {
+			this->preturi = new float[this->nrProduse];
+			for (int i = 0; i < this->nrProduse; i++) {
+				this->preturi[i] = copie.preturi[i];
+			}
+		}
+		else {
+			this->preturi = nullptr;
+		}
 	}
 	void afisare() {
 		cout << endl << "Id: " << this->id;
@@ -54,11 +74,11 @@ public:
 	}
 
 private:
-	int id;
+	const int id;
 	string denumire;
 	int nrProduse;
 	float* preturi;
-	static int nrCofetarii;
+	Zona zona;
 };
 
 int Cofetarie::nrCofetarii = 0;
