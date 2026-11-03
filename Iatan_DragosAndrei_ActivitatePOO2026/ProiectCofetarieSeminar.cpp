@@ -66,6 +66,47 @@ public:
 		}
 	}
 
+	int getNrProduse() {
+		return this->nrProduse;
+	}
+
+	void setNrProduse(int valoareNoua) {
+		if (valoareNoua >= 0) {
+			this->nrProduse = valoareNoua;
+		}else{
+			throw exception();
+		}
+	}
+
+	float* getPreturi() {
+		//return this->preturi;
+		float* vPreturi = new float[this->nrProduse];
+		for (int i = 0; i < this->nrProduse; i++) {
+			vPreturi[i] = this->preturi[i];
+		}
+		return vPreturi;
+	}
+
+	void setPreturi(float* vPreturi, int dim) {
+		setNrProduse(dim);
+
+		if (this->preturi != nullptr) {
+			delete[] this->preturi;
+			this->preturi = nullptr;
+		}
+
+		if (vPreturi != nullptr) {
+			this->preturi = new float[this->nrProduse];
+			for (int i = 0; i < this->nrProduse;i++) {
+				this->preturi[i] = vPreturi[i];
+			}
+			delete[] vPreturi;
+		}
+		else {
+			this->preturi = nullptr;
+		}
+	}
+
 	void afisare() {
 		cout << endl << "Id: " << this->id;
 		cout << endl << "Denumire: " << this->denumire;
