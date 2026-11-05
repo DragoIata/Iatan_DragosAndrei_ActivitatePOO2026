@@ -123,12 +123,11 @@ public:
 			for (int i = 0;i < this->nrProduse - 1;i++) {
 				cout << this->preturi[i] << " lei, ";
 			}
-			cout << this->preturi[nrProduse - 1] << " lei.";
+			cout << this->preturi[nrProduse - 1] << " lei." << endl;
 		}
 		else {
-			cout << ", nu sunt produse!";
+			cout << ", nu sunt produse!" << endl;
 		}
-		cout << endl << "Denumire: " << this->denumire;
 	}
 
 	bool operator<(const Cofetarie& c) {
@@ -140,7 +139,7 @@ public:
 	}
 
 	~Cofetarie() {
-		cout << "S-a apelat destructorul pentru cofetaria cu id: " << this->id << endl;
+		cout << endl << "S-a apelat destructorul pentru cofetaria cu id: " << this->id << endl;
 		if (this->preturi != nullptr) {
 			delete[] this->preturi;
 		}
@@ -162,12 +161,53 @@ int main() {
 	cofetarieGenerala.afisare();
 
 	float* preturi = new float[] {18.5, 24, 15.5};
-	Cofetarie* cofetarieRomana = new Cofetarie(2, "Cofetarie Romana", 3, preturi);
+	Cofetarie* cofetarieRomana = new Cofetarie(2, "Cofetarie Romana", 3, preturi, Centrala);
 	cofetarieRomana->afisare();
 
-	delete cofetarieRomana;
+	Cofetarie* cofetarieTineretului = new Cofetarie(*cofetarieRomana);
+	cofetarieTineretului->afisare();
 
-	cout << endl << "Numar Cofetarii: " << Cofetarie::getNrCofetarii();
+	cofetarieGenerala = *cofetarieTineretului;
+	cofetarieGenerala.afisare();
+
+	Cofetarie cofetarieX;
+	cofetarieX = cofetarieGenerala;
+	cofetarieX.afisare();
+
+	try {
+		cofetarieX.setNrProduse(2);
+	}
+	catch (int cod) {
+		cout << endl << cod;
+	}
+	catch (const char* mesaj) {
+		cout << endl << mesaj;
+	}
+	catch (...) {
+		cout << endl << "Valoare negativa!";
+	}
+
+	cout << endl << "Noul numar al produselor este: " << cofetarieX.getNrProduse() << endl;
+
+	cofetarieX.setPreturi(new float[] {52.7, 36.7}, 2);
+
+	float* vPreturi = cofetarieX.getPreturi();
+	for (int i = 0; i < cofetarieX.getNrProduse(); i++) {
+		cout << vPreturi[i] << " lei, ";
+	}
+
+	if (cofetarieX < cofetarieGenerala) {
+		cout << endl << "CofetariaX are mai putine produse decat cofetariaGenerala!" << endl;
+	}
+	else {
+		cout << endl << "CofetariaGenerala are mai multe produse decat cofetariaX!" << endl;
+	}
+	
+	delete[] vPreturi;
+	delete cofetarieRomana;
+	delete cofetarieTineretului;
+
+	cout << endl << "Numar Cofetarii: " << Cofetarie::getNrCofetarii()<<endl;
 
 	return 0;
 }
