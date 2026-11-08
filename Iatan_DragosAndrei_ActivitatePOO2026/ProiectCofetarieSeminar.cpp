@@ -247,56 +247,43 @@ int Cofetarie::nrCofetarii = 0;
 int main() {
 	Cofetarie cofetarieGenerala;
 
-	cofetarieGenerala.afisare();
-
-	float* preturi = new float[] {18.5, 24, 15.5};
-	Cofetarie* cofetarieRomana = new Cofetarie(2, "Cofetarie Romana", 3, preturi, Centrala);
-	cofetarieRomana->afisare();
-
-	Cofetarie* cofetarieTineretului = new Cofetarie(*cofetarieRomana);
-	cofetarieTineretului->afisare();
-
-	cofetarieGenerala = *cofetarieTineretului;
-	cofetarieGenerala.afisare();
-
-	Cofetarie cofetarieX;
-	cofetarieX = cofetarieGenerala;
-	cofetarieX.afisare();
-
-	try {
-		cofetarieX.setNrProduse(2);
-	}
-	catch (int cod) {
-		cout << endl << cod;
-	}
-	catch (const char* mesaj) {
-		cout << endl << mesaj;
-	}
-	catch (...) {
-		cout << endl << "Valoare negativa!";
-	}
-
-	cout << endl << "Noul numar al produselor este: " << cofetarieX.getNrProduse() << endl;
-
-	cofetarieX.setPreturi(new float[] {52.7, 36.7}, 2);
-
-	float* vPreturi = cofetarieX.getPreturi();
-	for (int i = 0; i < cofetarieX.getNrProduse(); i++) {
-		cout << vPreturi[i] << " lei, ";
-	}
-
-	if (cofetarieX < cofetarieGenerala) {
-		cout << endl << "CofetariaX are mai putine produse decat cofetariaGenerala!" << endl;
+	if (!cofetarieGenerala) {
+		cout << endl << "Vanzarile totale sunt pozitive!";
 	}
 	else {
-		cout << endl << "CofetariaGenerala are mai multe produse decat cofetariaX!" << endl;
+		cout << endl << "Nu exista vanzari!";
 	}
+
+	cout << endl << cofetarieGenerala(100);
+	cout << cofetarieGenerala;
+
+	float* preturi = new float[] {18.5, 24, 15.5};
+	Cofetarie* cofetarieRomana = new Cofetarie(7, "Cofetarie Romana", 97000, 3, preturi, Centrala);
+	(*cofetarieRomana) += 100;
+
+	if (cofetarieGenerala < *cofetarieRomana) {
+		cout << endl << "Cofetaria Generala are mai putine produse decat cofetaria Romana!";
+	}
+	else {
+		cout << endl << "Cofetaria Romana are mai putine produse decat cofetaria Generala!";
+	}
+
+	(*cofetarieRomana)[0] = 20;
+
+	cout << endl << (*cofetarieRomana)[0];
+	cout << *cofetarieRomana;
+
+	Cofetarie cofetarie1 = cofetarieGenerala++;
+
+	cout << cofetarie1;	
+	cout << cofetarieGenerala;
+
+	Cofetarie cofetarie2 = ++cofetarieGenerala;
+	cout << cofetarie2;
+	cout << cofetarieGenerala;
 	
-	delete[] vPreturi;
+	cout << endl << "Cast cofetarie -> int: " << int(*cofetarieRomana);
+
 	delete cofetarieRomana;
-	delete cofetarieTineretului;
-
-	cout << endl << "Numar Cofetarii: " << Cofetarie::getNrCofetarii()<<endl;
-
-	return 0;
+	cout << endl << "Numar Cofetarii: " << Cofetarie::nrCofetarii;
 }
